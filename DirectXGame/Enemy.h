@@ -1,0 +1,73 @@
+#pragma once
+#include <KamataEngine.h>
+#include "EnemyBullet.h"
+#include "Model2.h"
+
+enum class Phase {
+	Approach, //接近する
+	Leave,    //離脱する
+};
+
+class Player;
+
+class Enemy {
+public: // メンバ関数
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	void Initialize(KamataEngine::Model2* model, uint32_t textureHandle);
+
+	/// <summary>
+	/// 毎フレーム処理
+	/// </summary>
+	void Update();
+
+	/// <summary>
+	/// 描画
+	/// </summary>
+	void Draw(KamataEngine::Camera& camera);
+
+	void Fire();
+	
+	~Enemy();
+
+	//発射間隔
+	static const int kFireInterval = 60;
+	//接近フェーズ初期化
+	void Approach();
+
+	KamataEngine::Vector3 GetWorldPosition();
+
+	void SetPlayer(Player* player) { player_ = player;}
+
+	// 衝突を検知したら呼び出されるコールバック関数
+	void OnCollision();
+
+	const std::list<EnemyBullet*>& GetBullets() const { return bullets_; }
+
+	bool IsFinished() const { return finished_; }
+
+
+private:
+	// ワールドトランスフォーム
+	KamataEngine::WorldTransform worldTransform_;
+	// 3Dモデル
+	KamataEngine::Model2* model_ = nullptr;
+	// テクスチャハンドル
+	uint32_t textureHandle_ = 0u;
+	//フェーズ
+	Phase phase_ = Phase::Approach;
+	// 弾
+	std::list<EnemyBullet*> bullets_;
+	//発射タイマー
+	int32_t fireTimer = 0;
+	//自キャラ
+	Player* player_ = nullptr;
+	// デスフラグ
+	//bool isDead_ = false;
+
+	bool finished_ = false;
+
+	int hp_ = 50;
+	bool isDead_ = false; // 死亡フラグ
+};
