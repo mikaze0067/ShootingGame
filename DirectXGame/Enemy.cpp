@@ -19,6 +19,9 @@ void Enemy::Initialize(Model2* model, uint32_t textureHandle) {
 }
 
 void Enemy::Update() {
+	if (isDead_) {
+		return;
+	}
 
 	// デスフラグの立った弾を削除
 	bullets_.remove_if([](EnemyBullet* bullet) {
@@ -101,9 +104,9 @@ void Enemy::Update() {
 
 void Enemy::Draw(Camera& camera) {
 	// 3Dモデルを描画
-	//if (isDead_ == false) {
+	if (isDead_ == false) {
 	model_->Draw(worldTransform_, camera, textureHandle_);
-	//}
+	}
 
 
 	// 弾描画
@@ -168,10 +171,22 @@ Vector3 Enemy::GetWorldPosition() {
 	return worldPos;
 }
 
-void Enemy::OnCollision() {  // 弾が当たったとき呼ばれる
-	hp_ -= 1;               // 1ダメージ
+void Enemy::OnCollision() { TakeDamage(1); }
+
+
+void Enemy::TakeDamage(int damage) {
+	if (isDead_) {
+		return;
+	}
+
+	damage = damage_;
+	hp_ -= damage;
+
 	if (hp_ <= 0) {
-		isDead_ = true; // 死亡フラグON
+		hp_ = 0;
+		isDead_ = true;
+		finished_ = true;
 	}
 }
 
+float Enemy::GetHpRatio() const { return static_cast<float>(hp_) / maxHp_; }

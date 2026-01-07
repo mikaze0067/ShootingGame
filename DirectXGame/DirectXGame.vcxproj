@@ -159,6 +159,7 @@
     <ClCompile Include="Clear.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBullet.cpp" />
+    <ClCompile Include="EnemyHPBar.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MathUtilityForText.cpp" />
     <ClCompile Include="Model2.cpp" />
@@ -271,6 +272,7 @@
     <ClInclude Include="Clear.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyBullet.h" />
+    <ClInclude Include="EnemyHPBar.h" />
     <ClInclude Include="MathUtilityForText.h" />
     <ClInclude Include="Model2.h" />
     <ClInclude Include="Player.h" />

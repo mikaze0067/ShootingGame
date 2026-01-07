@@ -167,7 +167,6 @@ void GameScene::CheckAllCollisions() {
 			enemy_->OnCollision();
 			// 自弾の衝突時コールバックを呼び出す
 			bullet->OnCollision();
-			finished_ = true;
 		}
 	}
 #pragma endregion

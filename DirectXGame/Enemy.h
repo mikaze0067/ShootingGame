@@ -43,6 +43,10 @@ public: // メンバ関数
 	// 衝突を検知したら呼び出されるコールバック関数
 	void OnCollision();
 
+	void TakeDamage(int damage);
+
+	float GetHpRatio() const;
+
 	const std::list<EnemyBullet*>& GetBullets() const { return bullets_; }
 
 	bool IsFinished() const { return finished_; }
@@ -69,5 +73,8 @@ private:
 	bool finished_ = false;
 
 	int hp_ = 50;
+	int maxHp_ = 50;
 	bool isDead_ = false; // 死亡フラグ
+	int damage_ = 1;
+
 };
