@@ -43,6 +43,14 @@ public: // メンバ関数
 	// デスフラグのgetter
 	bool IsFinished() const { return finished_; }
 
+	
+
+private:
+	// メンバ変数
+	KamataEngine::DirectXCommon* dxCommon_ = nullptr;
+	KamataEngine::Input* input_ = nullptr;
+	KamataEngine::Audio* audio_ = nullptr;
+
 	// 3Dモデル
 	KamataEngine::Model2* model_ = nullptr;
 	KamataEngine::Model2* modelEnemy_ = nullptr;
@@ -52,10 +60,6 @@ public: // メンバ関数
 	// ビュープロジェクション
 	KamataEngine::Camera camera_;
 
-private: // メンバ変数
-	KamataEngine::DirectXCommon* dxCommon_ = nullptr;
-	KamataEngine::Input* input_ = nullptr;
-	KamataEngine::Audio* audio_ = nullptr;
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0;
 	// テクスチャハンドル
