@@ -52,7 +52,7 @@ private:
 	bool finished_ = false;
 
 	// 連射間隔（フレーム数）
-	const int kShotInterval_ = 5; // ← 5フレームごとに弾を出す（60fpsなら約0.083秒間隔）
+	const int kShotInterval_ = 5;
 
 	int shotTimer_ = 0;
 

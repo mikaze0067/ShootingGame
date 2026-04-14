@@ -171,7 +171,9 @@ Vector3 Enemy::GetWorldPosition() {
 	return worldPos;
 }
 
-void Enemy::OnCollision() { TakeDamage(1); }
+void Enemy::OnCollision() { TakeDamage(1);
+	finished_ = true;
+}
 
 
 void Enemy::TakeDamage(int damage) {
@@ -185,7 +187,7 @@ void Enemy::TakeDamage(int damage) {
 	if (hp_ <= 0) {
 		hp_ = 0;
 		isDead_ = true;
-		finished_ = true;
+		
 	}
 }
 
