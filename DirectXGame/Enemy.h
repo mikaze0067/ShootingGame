@@ -3,11 +3,6 @@
 #include "EnemyBullet.h"
 #include "Model2.h"
 
-enum class Phase {
-	Approach, //接近する
-	Leave,    //離脱する
-};
-
 class Player;
 
 class Enemy {
@@ -26,15 +21,11 @@ public: // メンバ関数
 	/// 描画
 	/// </summary>
 	void Draw(KamataEngine::Camera& camera);
-
-	void Fire();
 	
 	~Enemy();
 
 	//発射間隔
 	static const int kFireInterval = 60;
-	//接近フェーズ初期化
-	void Approach();
 
 	KamataEngine::Vector3 GetWorldPosition();
 
@@ -53,6 +44,16 @@ public: // メンバ関数
 
 
 private:
+
+	void Fire();
+	// 接近フェーズ初期化
+	void Approach();
+
+	enum class Phase {
+		Approach, // 接近する
+		Leave,    // 離脱する
+	};
+
 	// ワールドトランスフォーム
 	KamataEngine::WorldTransform worldTransform_;
 	// 3Dモデル

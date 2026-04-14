@@ -28,7 +28,6 @@ private:
 	KamataEngine::WorldTransform worldTransformTitle_;
 	KamataEngine::WorldTransform worldTransformPlayer_;
 
-
 	KamataEngine::Model2* model_ = nullptr;
 
 	float counter_ = 0.0f;
@@ -38,7 +37,6 @@ private:
 
 	int time = 360;
 
-	
 	//
 	uint32_t texture;
 	KamataEngine::Sprite* sprite = nullptr;

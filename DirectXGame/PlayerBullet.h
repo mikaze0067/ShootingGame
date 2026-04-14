@@ -21,8 +21,6 @@ public: // メンバ関数
 
 	bool IsDead() const { return isDead_; }
 
-	static const int32_t kLifeTime = 60 * 5;
-
 	// 衝突を検知したら呼び出されるコールバック関数
 	void OnCollision();
 
@@ -37,9 +35,12 @@ private:
 	uint32_t textureHandle_ = 0u;
 	// 速度
 	KamataEngine::Vector3 velocity_ = {};
+	// 連射間隔（フレーム数）
+	static const int32_t kLifeTime = 60 * 5;
 	// デスタイマー
 	int32_t deathTimer_ = kLifeTime;
 	// デスフラグ
 	bool isDead_ = false;
+
 
 };

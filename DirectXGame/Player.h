@@ -21,8 +21,6 @@ public: // メンバ関数
 	/// </summary>
 	void Draw(KamataEngine::Camera& camera_);
 
-	void Attack();
-
 	~Player();
 
 	//ワールド座標を取得
@@ -37,6 +35,8 @@ public: // メンバ関数
 
 
 private:
+
+	void Attack();
 
 	// ワールドトランスフォーム
 	KamataEngine::WorldTransform worldTransform_;
