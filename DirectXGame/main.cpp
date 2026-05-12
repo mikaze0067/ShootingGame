@@ -32,7 +32,7 @@ void DrawScene();
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	
 // エンジン初期化
-	KamataEngine::Initialize(L"LE3D_08_ササノ_ミカゼ_WP");
+	KamataEngine::Initialize(L"LE4D_09_ササノ_ミカゼ");
 
 	// DirectXCommonインスタンスの取得
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
