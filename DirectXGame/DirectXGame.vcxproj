@@ -271,6 +271,7 @@
     <ClInclude Include="Clear.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyBullet.h" />
+    <ClInclude Include="IScene.h" />
     <ClInclude Include="MathUtilityForText.h" />
     <ClInclude Include="Model2.h" />
     <ClInclude Include="Player.h" />

@@ -1,28 +1,31 @@
 #pragma once
 
 #include <KamataEngine.h>
+#include "IScene.h"
 #include "Model2.h"
 
 
-class TitleScene {
+class TitleScene : public IScene {
 public:
 
-	~TitleScene();
+	~TitleScene() override;
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize();
+	void Initialize() override;
 	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>
-	void Update();
+	void Update() override;
 
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	void Draw() override;
 	// デスフラグのgetter
-	bool IsFinished() const { return finished_; }
+	bool IsFinished() const override { return finished_; }
+
+	SceneType GetNextScene() const override { return SceneType::kGame; }
 
 private:
 

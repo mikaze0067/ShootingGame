@@ -1,25 +1,14 @@
 #include "KamataEngine.h"
 #include <Windows.h>
+#include <memory>
 #include "scene/GameScene.h"
 #include "TitleScene.h"
 #include "Clear.h"
+#include "IScene.h"
 
 using namespace KamataEngine;
 
-GameScene* gameScene = nullptr;
-TitleScene* titleScene = nullptr;
-ClearScene* clearScene = nullptr;
-
-// シーン（型）
-enum class Scene {
-	kUnknown = 0,
-
-	kTitle,
-	kGame,
-	kClear,
-};
-// 現在シーン（型）
-Scene scene = Scene::kTitle;
+std::unique_ptr<IScene> currentScene = nullptr;
 
 void ChangeScene();
 
@@ -27,6 +16,24 @@ void UpdateScene();
 
 void DrawScene();
 
+std::unique_ptr<IScene> CreateScene(SceneType sceneType) {
+	std::unique_ptr<IScene> newScene = nullptr;
+
+	switch (sceneType) {
+	case SceneType::kTitle:
+		newScene = std::make_unique<TitleScene>();
+		break;
+	case SceneType::kGame:
+		newScene = std::make_unique<GameScene>();
+		break;
+	case SceneType::kClear:
+		newScene = std::make_unique<ClearScene>();
+		break;
+	}
+
+	newScene->Initialize();
+	return newScene;
+}
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
@@ -38,15 +45,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
 	// 最初のシーンの初期化
-	scene = Scene::kTitle;
-
-	// タイトルシーンの初期化
-	titleScene = new TitleScene();
-	titleScene->Initialize();
-
-	// クリアシーン
-	clearScene = new ClearScene();
-	clearScene->Initialize();
+	currentScene = CreateScene(SceneType::kTitle);
 
 	// メインループ
 	while (true) {
@@ -76,8 +75,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	}
 
 	// 各種解放
-	delete gameScene;
-	delete titleScene;
+	currentScene.reset();
 
 	// 3Dモデル解放
 	Model2::StaticFinalize();
@@ -85,71 +83,19 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 }
 
 void ChangeScene() {
-	switch (scene) {
-	case Scene::kTitle:
-		if (titleScene->IsFinished()) {
-			// シーン変更
-			scene = Scene::kGame;
-			// 旧シーンの解放
-			delete titleScene;
-			titleScene = nullptr;
-			// 新しいシーンの生成と初期化
-			gameScene = new GameScene;
-			gameScene->Initialize();
-		}
-		break;
-	case Scene::kGame:
-		if (gameScene->IsFinished()) {
-			// シーン変更
-			scene = Scene::kClear;
-			// 旧シーンの解放
-			delete gameScene;
-			gameScene = nullptr;
-			// 新しいシーンの生成と初期化
-			clearScene = new ClearScene;
-			clearScene->Initialize();
-		}
-		break;
-	case Scene::kClear:
-		if (clearScene->IsFinished()) {
-			// シーン変更
-			scene = Scene::kTitle;
-			// 旧シーンの解放
-			delete clearScene;
-			clearScene = nullptr;
-			// 新しいシーンの生成と初期化
-			titleScene = new TitleScene;
-			titleScene->Initialize();
-		}
-		break;
+	if (currentScene && currentScene->IsFinished()) {
+		currentScene = CreateScene(currentScene->GetNextScene());
 	}
 }
 
 void UpdateScene() {
-	switch (scene) {
-	case Scene::kTitle:
-		titleScene->Update();
-
-		break;
-	case Scene::kGame:
-		gameScene->Update();
-		break;
-	case Scene::kClear:
-		clearScene->Update();
-		break;
+	if (currentScene) {
+		currentScene->Update();
 	}
 }
 
 void DrawScene() {
-	switch (scene) {
-	case Scene::kTitle:
-		titleScene->Draw();
-		break;
-	case Scene::kGame:
-		gameScene->Draw();
-		break;
-	case Scene::kClear:
-		clearScene->Draw();
-		break;
+	if (currentScene) {
+		currentScene->Draw();
 	}
 }

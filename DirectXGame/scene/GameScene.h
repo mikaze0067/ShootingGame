@@ -1,6 +1,7 @@
 #pragma once
 
 #include <KamataEngine.h>
+#include "../IScene.h"
 #include "../Player.h"
 #include "../Skydome.h"
 #include "../Enemy.h"
@@ -10,7 +11,7 @@
 /// <summary>
 /// ゲームシーン
 /// </summary>
-class GameScene {
+class GameScene : public IScene {
 
 public: // メンバ関数
 	/// <summary>
@@ -21,27 +22,29 @@ public: // メンバ関数
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~GameScene();
+	~GameScene() override;
 
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize();
+	void Initialize() override;
 
 	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>
-	void Update();
+	void Update() override;
 
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	void Draw() override;
 
 	void CheckAllCollisions();
 
 	// デスフラグのgetter
-	bool IsFinished() const { return finished_; }
+	bool IsFinished() const override { return finished_; }
+
+	SceneType GetNextScene() const override { return SceneType::kClear; }
 
 	
 
