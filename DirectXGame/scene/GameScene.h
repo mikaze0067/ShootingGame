@@ -83,5 +83,4 @@ private:
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
-	/// 
 };
